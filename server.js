@@ -1,7 +1,12 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 
 const { connectToDB } = require('./config/db');
+
+const corsOptions = {
+  origin: ['http://localhost:5173', 'https://chatty-realtime.netlify.app'],
+};
 
 const userRoutes = require('./routes/userRoutes');
 const chatRoutes = require('./routes/chatRoutes');
@@ -14,7 +19,7 @@ connectToDB().then(() => {
 });
 
 const app = express();
-
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/user', userRoutes);
